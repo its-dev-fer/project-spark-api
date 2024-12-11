@@ -9,13 +9,13 @@ app.use(express.json());
 // app.use("/auth", authRoutes);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("OK"); // Health-check
+    res.send("OK"); // Health-check
 });
 
 const startServer = async () => {
     app.listen(port, () => {
         console.log(`Server is running on http://localhost:${port}`);
-      });
+    });
 };
 
 startServer();
