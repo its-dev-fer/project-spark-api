@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import sequelize_conexion from '../../Config/conection_database';
+import DatabaseConnection from '../../Config/DatabaseConnection';
 class Guest extends Model {}
 
 Guest.init(
@@ -30,12 +30,12 @@ Guest.init(
       allowNull: true,
     },
     rsvp_status: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.ENUM('Pending','Accepted','Rejected'),
       defaultValue: 'Pending',
     },
   },
   {
-    sequelize: sequelize_conexion,
+    sequelize: DatabaseConnection,
     modelName: 'Guest',
     tableName: 'Guests',
     timestamps: false,

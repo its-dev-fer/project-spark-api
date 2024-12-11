@@ -9,12 +9,12 @@ const PASSWORD = process.env['PASSWORD_DATABASE'] ?? "admin";
 const HOST = process.env['HOST_DATABASE'] ?? 'localhost';
 const PORT = parseInt(process.env['PORT_DATABASE'] ?? "3306")
 
-const sequelize_conexion = new Sequelize(NAME_DATABASE, USERNAME, PASSWORD, {
+const DatabaseConnection = new Sequelize(NAME_DATABASE, USERNAME, PASSWORD, {
     host: HOST,
     port: PORT,
-    dialect: "mysql",
+    dialect: "postgres",
     logging: false
 }
 )
 
-export default sequelize_conexion;
+export default DatabaseConnection;

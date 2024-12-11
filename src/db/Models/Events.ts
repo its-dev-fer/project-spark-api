@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import sequelize_conexion from '../../Config/conection_database';
+import DatabaseConnection from '../../Config/DatabaseConnection';
 class Events extends Model {}
 
 Events.init(
@@ -30,7 +30,7 @@ Events.init(
       allowNull: false,
     },
     event_date: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false,
     },
     location: {
@@ -51,7 +51,7 @@ Events.init(
     },
   },
   {
-    sequelize: sequelize_conexion,
+    sequelize: DatabaseConnection,
     modelName: 'Event',
     tableName: 'Events',
     timestamps: false,

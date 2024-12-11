@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import sequelize_conexion from '../../Config/conection_database';
+import DatabaseConnection from '../../Config/DatabaseConnection';
 class EventType extends Model{}
 
 EventType.init(
@@ -15,9 +15,9 @@ EventType.init(
         },
     },
     {
-        sequelize:sequelize_conexion,
+        sequelize:DatabaseConnection,
         modelName: 'EventType',
-        timestamps: false,
+        timestamps: true,
         tableName: 'EventType'
     }
 );

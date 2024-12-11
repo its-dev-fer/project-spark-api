@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import sequelize_conexion from '../../Config/conection_database';
+import DatabaseConnection from '../../Config/DatabaseConnection';
 class Templates extends Model{}
 
 Templates.init(
@@ -28,7 +28,7 @@ Templates.init(
           },
     },
     {
-        sequelize: sequelize_conexion,
+        sequelize: DatabaseConnection,
         modelName: 'Event', 
         timestamps: false,  
         tableName: 'Events',

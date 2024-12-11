@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import sequelize_conexion from '../../Config/conection_database';
+import DatabaseConnection from '../../Config/DatabaseConnection';
 class Plan extends Model {}
 
 
@@ -37,7 +37,7 @@ Plan.init(
     },
   },
   {
-    sequelize:sequelize_conexion, 
+    sequelize:DatabaseConnection, 
     modelName: 'Plan', 
     timestamps: false,  
     tableName: 'Plans',

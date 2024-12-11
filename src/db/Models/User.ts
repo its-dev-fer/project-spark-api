@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import sequelize_conexion from '../../Config/conection_database';
+import DatabaseConnection from '../../Config/DatabaseConnection';
 class User extends Model {}
 User.init(
   {
@@ -36,7 +36,7 @@ User.init(
     },
   },
   {
-    sequelize: sequelize_conexion, 
+    sequelize: DatabaseConnection, 
     modelName: 'User', 
     timestamps: false, 
     tableName: 'Users',
