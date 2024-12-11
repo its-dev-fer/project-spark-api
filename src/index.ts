@@ -1,5 +1,6 @@
-require("dotenv").config();
+import 'dotenv/config'
 import express, { Request, Response } from "express";
+
 
 const app = express();
 const port = process.env.PORT || 3030;
@@ -10,6 +11,7 @@ app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("OK"); // Health-check
+  
 });
 
 const startServer = async () => {
@@ -17,5 +19,8 @@ const startServer = async () => {
         console.log(`Server is running on http://localhost:${port}`);
       });
 };
+
+
+
 
 startServer();
