@@ -17,6 +17,7 @@
     "spark-project-api": "file:"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.1",
     "concurrently": "^9.1.0",

@@ -1,6 +1,16 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import DatabaseConnection from '../../Config/DatabaseConnection';
-class User extends Model {}
+import { IUser } from '../../Types/models';
+
+class User extends Model implements IUser {
+  public id!: number;
+  public email!: string;
+  public password!: string;
+  public name!: string;
+  public plan_id!: number;
+  public created_at!: Date;
+  public updated_at!: Date;
+}
 User.init(
   {
     id: {
@@ -42,3 +52,5 @@ User.init(
     tableName: 'Users',
   }
 );
+
+export default User;

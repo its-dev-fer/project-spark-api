@@ -31,7 +31,7 @@ Plan.init(
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false, 
     },
-    anual_price: {
+    annual_price: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false, 
     },
