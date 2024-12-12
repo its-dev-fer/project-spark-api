@@ -1,12 +1,13 @@
 import cors from 'cors';
 import 'dotenv/config'
 import express, { Request, Response } from "express";
-
+import routerAuth from './routes/example.route';
 
 const app = express();
 const port = process.env.PORT || 3030;
 
 app.use(express.json());
+app.use('/auth', routerAuth);
 
 app.use(cors({
   origin: "*",
