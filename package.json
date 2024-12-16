@@ -1,6 +1,6 @@
 {
     "name": "spark-project-api",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "API para el proyecto Spark",
     "main": "src/index.js",
     "scripts": {
