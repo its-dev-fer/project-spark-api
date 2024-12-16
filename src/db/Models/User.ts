@@ -1,6 +1,6 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
-import DatabaseConnection from "../../config/DatabaseConnection";
-import { IUser } from "../../Types/models";
+import { DataTypes, Model } from "sequelize";
+import DatabaseConnection from "../../Config/DatabaseConnection";
+import { IUser } from "../../Interfaces/db/models";
 
 class User extends Model implements IUser {
     public id!: number;
@@ -53,15 +53,4 @@ User.init(
     }
 );
 
-(async () => {
-    try {
-        await User.sync();
-        console.log('The table for the User model was just (re)created!');
-    } catch (error) {
-        console.error('Error creating the table:', error);
-    }
-})();
-
-
 export default User;
-

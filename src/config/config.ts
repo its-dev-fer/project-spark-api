@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 export const {
     PORT = 3000,
     DB_NAME = "pruebas",
@@ -8,5 +6,6 @@ export const {
     DB_HOST = "localhost",
     DB_PORT = "5432",
     JWT_SECRET = "DEFAULT_SECRET",
-    REFRESH_TOKEN = "DEFAULT_REFRESH_SECRET"
+    REFRESH_TOKEN = "DEFAULT_REFRESH_SECRET",
+    SALT_ROUNDS = "5"
 } = process.env;

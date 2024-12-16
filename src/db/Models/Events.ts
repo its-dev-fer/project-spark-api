@@ -1,5 +1,5 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
-import DatabaseConnection from "../../config/DatabaseConnection";
+import { DataTypes, Model } from "sequelize";
+import DatabaseConnection from "../../Config/DatabaseConnection";
 
 class Events extends Model {}
 
@@ -21,7 +21,7 @@ Events.init(
         event_id: {
             type: DataTypes.INTEGER,
             references: {
-                model: "EventTypes",
+                model: "EventType",
                 key: "id"
             },
             onDelete: "CASCADE"
@@ -58,3 +58,5 @@ Events.init(
         timestamps: false
     }
 );
+
+export default Events;

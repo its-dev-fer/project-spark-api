@@ -1,5 +1,5 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
-import DatabaseConnection from "../../config/DatabaseConnection";
+import { DataTypes, Model } from "sequelize";
+import DatabaseConnection from "../../Config/DatabaseConnection";
 class Guest extends Model {}
 
 Guest.init(
@@ -41,3 +41,5 @@ Guest.init(
         timestamps: false
     }
 );
+
+export default Guest;

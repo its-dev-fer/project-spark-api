@@ -1,5 +1,5 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
-import DatabaseConnection from "../../config/DatabaseConnection";
+import { DataTypes, Model } from "sequelize";
+import DatabaseConnection from "../../Config/DatabaseConnection";
 class Plan extends Model {}
 
 Plan.init(
@@ -42,3 +42,5 @@ Plan.init(
         tableName: "Plans"
     }
 );
+
+export default Plan;

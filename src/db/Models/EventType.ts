@@ -1,5 +1,5 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
-import DatabaseConnection from "../../config/DatabaseConnection";
+import { DataTypes, Model } from "sequelize";
+import DatabaseConnection from "../../Config/DatabaseConnection";
 class EventType extends Model {}
 
 EventType.init(
@@ -21,3 +21,5 @@ EventType.init(
         tableName: "EventType"
     }
 );
+
+export default EventType;

@@ -1,7 +1,4 @@
 import { Sequelize } from "sequelize";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const NAME_DATABASE = process.env["NAME_DATABASE"] ?? "multi";
 const USERNAME = process.env["USERNAME_DATABASE"] ?? "root";

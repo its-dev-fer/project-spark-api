@@ -1,46 +1,76 @@
 import TokenInterface from "../../Interfaces/service/TokenInterface";
 import { Request, Response } from "express";
+import handleErrorResponse from "../../Errors/HanlderResponse.Error";
+import {
+    ErrorMissingRequiredFields,
+    ErrorGenerateToken,
+    ErrorPayloadDecoding,
+    ErrorUnauthorized
+} from "../../Errors/Response.Error";
 
-export default class RefreshToken {
-    constructor( readonly tokenInterface: TokenInterface){}
+export default class RefreshTokenController {
+    constructor(readonly tokenInterface: TokenInterface) {}
 
-    async run (req: Request, res:Response): Promise<Response>{
+    async run(req: Request, res: Response): Promise<Response> {
         try {
-            
-            const {refreshToken}:{refreshToken: string} = req.body;
+            const { refreshToken }: { refreshToken: string } = req.body;
 
-            if (!refreshToken){
-                return res.status(400).json({
-                    data: null,
-                    message: "Refresh token not provided"
-                })
-            }
+            if (!refreshToken)
+                throw new ErrorMissingRequiredFields(
+                    "Is required refreshToken"
+                );
 
-        const payload = this.tokenInterface.validateRefreshToken(refreshToken);
-        
-        if (!payload){
-            return res.status(401).json({
-                data: null,
-                message: 'Invalid refresh token'
-            })
-        }  
+            const payload =
+                this.tokenInterface.validateRefreshToken(refreshToken);
 
-        const newToken = this.tokenInterface.generateToken(payload.user_id, payload.plan_id)
+            const newToken = this.tokenInterface.generateToken(
+                payload.user_id,
+                payload.plan_id
+            );
 
-        return res.status(200).json({
-            message: "Token generated successfully",
-            data:{
-                token: newToken
-            }
-        })
-
+            return res.status(200).json({
+                message: "Token generated successfully",
+                data: {
+                    token: newToken
+                }
+            });
         } catch (error) {
-            console.error(error)
-            return res.status(500).json({
-                message: 'Internal Server Error',
-                data: null
-            })
+            switch (true) {
+                case error instanceof ErrorMissingRequiredFields:
+                    return handleErrorResponse({
+                        res,
+                        statusCode: error.statusCode,
+                        name: error.message
+                    });
+
+                case error instanceof ErrorGenerateToken:
+                    return handleErrorResponse({
+                        res,
+                        statusCode: error.statusCode,
+                        name: error.message
+                    });
+
+                case error instanceof ErrorPayloadDecoding:
+                    return handleErrorResponse({
+                        res,
+                        statusCode: error.statusCode,
+                        name: error.message
+                    });
+
+                case error instanceof ErrorUnauthorized:
+                    return handleErrorResponse({
+                        res,
+                        statusCode: error.statusCode,
+                        name: error.message
+                    });
+
+                default:
+                    return handleErrorResponse({
+                        res,
+                        statusCode: 500,
+                        name: "An unexpected error occurred"
+                    });
+            }
         }
     }
-
 }
