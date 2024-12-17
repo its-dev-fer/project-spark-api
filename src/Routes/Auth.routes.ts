@@ -10,11 +10,16 @@ const router = Router();
 const tokenService = new TokenService();
 const encryptService = new EncryptService();
 const userService = new UserService();
-const authController = new AuthController(tokenService, encryptService, userService);
+const authController = new AuthController(
+    tokenService,
+    encryptService,
+    userService
+);
 
 const refreshTokenController = new RefreshTokenController(tokenService);
 
-router.post("/login", (req, res) => authController.access(req, res));
-router.post("/refresh", (req, res) => refreshTokenController.run(req, res));
+router.post("/login", authController.access.bind(authController));
+router.post("/refresh",refreshTokenController.run.bind(refreshTokenController));
+
 
 export { router as AuthRouter };

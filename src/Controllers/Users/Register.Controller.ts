@@ -23,7 +23,7 @@ export default class RegisterUserController {
         try {
             const { email, password, name }: UserRequest = req.body;
             const existingUser = await this.userService.findUserByEmail(email);
-       
+
             if (existingUser)
                 throw new ErrorResourceExists(
                     "The email address you entered is already registered."
@@ -59,9 +59,8 @@ export default class RegisterUserController {
                     token
                 }
             });
-
         } catch (error) {
-            console.error(error)
+        
             switch (true) {
                 case error instanceof ErrorAccessingDatabase:
                     return handleErrorResponse({

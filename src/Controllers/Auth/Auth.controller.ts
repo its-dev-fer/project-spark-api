@@ -30,7 +30,8 @@ export default class AuthController {
                     "Required fields not provided"
                 );
 
-            const userFound: IUser | undefined = await this.userService.findUserByEmail(email);
+            const userFound: IUser | undefined =
+                await this.userService.findUserByEmail(email);
 
             if (!userFound) throw new ErrorNotFound("User not found");
 
