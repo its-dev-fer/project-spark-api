@@ -6,15 +6,11 @@ interface ErrorResponse {
     name: string;
 }
 
-
-
 const handleErrorResponse = ({ res, statusCode, name }: ErrorResponse) => {
     return res.status(statusCode).json({
         message: name,
         data: null
     });
 };
-
-
 
 export default handleErrorResponse;

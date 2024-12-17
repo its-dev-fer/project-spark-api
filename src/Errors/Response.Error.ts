@@ -6,7 +6,6 @@ const createErrorFactory = function (name: string, statusCode: number) {
             super(message);
             this.name = name;
             this.statusCode = statusCode;
-         
         }
     };
 };
@@ -42,5 +41,7 @@ export const ErrorPasswordComparison = createErrorFactory(
 );
 
 export const ErrorCredentials = createErrorFactory("Credentials Invalid", 400);
-
-
+export const ErrorResourceExists = createErrorFactory(
+    "Resource already exists",
+    409
+);
