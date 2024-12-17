@@ -5,6 +5,7 @@ import express, { Request, Response } from "express";
 import { AuthRouter } from "./Routes/Auth.routes";
 import { UserRouter } from "./Routes/User.routes";
 
+
 const app = express();
 const port = process.env.PORT || 3030;
 
@@ -28,5 +29,8 @@ const startServer = async () => {
         console.log(`Server is running on http://localhost:${port}`);
     });
 };
+
+
+
 
 startServer();
