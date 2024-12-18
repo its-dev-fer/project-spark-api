@@ -1,24 +1,27 @@
-import cors from 'cors';
-import 'dotenv/config'
+import "dotenv/config";
+import "./db/GenerateTables";
+import cors from "cors";
 import express, { Request, Response } from "express";
+import { AuthRouter } from "./Routes/Auth.routes";
+import { UserRouter } from "./Routes/User.routes";
 
 
 const app = express();
 const port = process.env.PORT || 3030;
 
 app.use(express.json());
+app.use("/auth", AuthRouter);
+app.use("/user", UserRouter);
 
-app.use(cors({
-  origin: "*",
-  methods: "GET,PUT,PATCH,POST,DELETE"
-}));
+app.use(
+    cors({
+        origin: "*",
+        methods: "GET,PUT,PATCH,POST,DELETE"
+    })
+);
 
-// cómo importar una ruta:
-// app.use("/auth", authRoutes);
-
-app.get("/", (req: Request, res: Response) => {
-  res.send("OK"); // Health-check
-  
+app.get("/", (_req: Request, res: Response) => {
+    res.send("OK");
 });
 
 const startServer = async () => {

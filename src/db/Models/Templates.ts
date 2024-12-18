@@ -1,36 +1,39 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
-import DatabaseConnection from '../../Config/DatabaseConnection';
-class Templates extends Model{}
+import { DataTypes, Model } from "sequelize";
+import DatabaseConnection from "../../Config/DatabaseConnection";
+
+class Templates extends Model {}
 
 Templates.init(
     {
-        id:{
-           type: DataTypes.INTEGER,
-           primaryKey: true,
-           autoIncrement: true,
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
         },
-        full_url:{
+        full_url: {
             type: DataTypes.TEXT,
-            allowNull: true,
+            allowNull: true
         },
-        event_type:{
+        event_type: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'EventType',
-                key: 'id'
+                model: "EventType",
+                key: "id"
             },
-            onDelete: 'CASCADE',
+            onDelete: "CASCADE"
         },
         template_type: {
-            type: DataTypes.ENUM('FREE', 'PREMIUM', 'ELITE'),
-            allowNull: false, 
-            defaultValue: 'FREE', 
-          },
+            type: DataTypes.ENUM("FREE", "PREMIUM", "ELITE"),
+            allowNull: false,
+            defaultValue: "FREE"
+        }
     },
     {
         sequelize: DatabaseConnection,
-        modelName: 'Event', 
-        timestamps: false,  
-        tableName: 'Events',
-      }
+        modelName: "Event",
+        timestamps: false,
+        tableName: "Events"
+    }
 );
+
+export default Templates;

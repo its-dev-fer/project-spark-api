@@ -1,23 +1,25 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
-import DatabaseConnection from '../../Config/DatabaseConnection';
-class EventType extends Model{}
+import { DataTypes, Model } from "sequelize";
+import DatabaseConnection from "../../Config/DatabaseConnection";
+class EventType extends Model {}
 
 EventType.init(
     {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true,
+            autoIncrement: true
         },
         name: {
             type: DataTypes.STRING(255),
-            allowNull: false,
-        },
+            allowNull: false
+        }
     },
     {
-        sequelize:DatabaseConnection,
-        modelName: 'EventType',
+        sequelize: DatabaseConnection,
+        modelName: "EventType",
         timestamps: true,
-        tableName: 'EventType'
+        tableName: "EventType"
     }
 );
+
+export default EventType;

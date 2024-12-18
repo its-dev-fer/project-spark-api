@@ -6,4 +6,4 @@ export interface IUser {
     plan_id: number;
     created_at: Date;
     updated_at: Date;
-  }
+}
