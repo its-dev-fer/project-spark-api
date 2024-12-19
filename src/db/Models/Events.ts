@@ -12,18 +12,18 @@ Events.init(
         },
         user_id: {
             type: DataTypes.INTEGER,
-            references: {
-                model: "Users",
-                key: "id"
-            },
+             //references: {
+              //   model: "Users",
+              //   key: "id"
+             //},
             onDelete: "CASCADE"
         },
         event_id: {
             type: DataTypes.INTEGER,
-            references: {
-                model: "EventType",
-                key: "id"
-            },
+            //references: {
+               //  model: "EventType",
+            //     key: "id"
+             //},
             onDelete: "CASCADE"
         },
         name: {

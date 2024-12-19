@@ -45,3 +45,7 @@ export const ErrorResourceExists = createErrorFactory(
     "Resource already exists",
     409
 );
+export const ErrorPlanLimitExceeded = createErrorFactory(
+    "Plan limit exceeded",
+    400
+);
