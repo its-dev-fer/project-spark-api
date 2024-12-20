@@ -7,7 +7,7 @@ import {
 import handleErrorResponse from "../Errors/HanlderResponse.Error";
 
 export default class AuthMiddleware {
-    constructor(readonly tokenService: TokenInterface) { }
+    constructor(readonly tokenService: TokenInterface) {}
 
     async run(req: Request, res: Response, next: NextFunction) {
         try {
@@ -15,10 +15,9 @@ export default class AuthMiddleware {
 
             if (!token)
                 throw new ErrorMissingRequiredFields("No token provided");
-            this.tokenService.validateToken(token.replace("Bearer", " "));
+            this.tokenService.validateToken(token.replace("Bearer ", ""));
 
             next();
-
         } catch (error) {
             switch (true) {
                 case error instanceof ErrorMissingRequiredFields:

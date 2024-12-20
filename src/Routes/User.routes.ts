@@ -4,7 +4,6 @@ import TokenService from "../Services/Token.Service";
 import EncryptService from "../Services/Encrypt.Service";
 import UserService from "../Services/User.Service";
 
-
 const router = Router();
 
 const tokenService = new TokenService();
@@ -16,6 +15,6 @@ const userController = new RegisterUserController(
     userService
 );
 
- router.post("/register", userController.run.bind(userController));
+router.post("/register", userController.run.bind(userController));
 
 export { router as UserRouter };

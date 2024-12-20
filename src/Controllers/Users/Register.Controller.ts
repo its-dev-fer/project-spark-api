@@ -60,7 +60,6 @@ export default class RegisterUserController {
                 }
             });
         } catch (error) {
-        
             switch (true) {
                 case error instanceof ErrorAccessingDatabase:
                     return handleErrorResponse({

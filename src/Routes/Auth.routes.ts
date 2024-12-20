@@ -19,7 +19,9 @@ const authController = new AuthController(
 const refreshTokenController = new RefreshTokenController(tokenService);
 
 router.post("/login", authController.access.bind(authController));
-router.post("/refresh",refreshTokenController.run.bind(refreshTokenController));
-
+router.post(
+    "/refresh",
+    refreshTokenController.run.bind(refreshTokenController)
+);
 
 export { router as AuthRouter };
