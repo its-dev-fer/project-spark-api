@@ -6,18 +6,40 @@ import {
 } from "../Errors/Response.Error";
 import handleErrorResponse from "../Errors/HanlderResponse.Error";
 
+export interface AuthenticatedRequest extends Request {
+    user?: {
+        user_id: number;
+        plan_id: number;
+    };
+}
+
 export default class AuthMiddleware {
     constructor(readonly tokenService: TokenInterface) {}
 
-    async run(req: Request, res: Response, next: NextFunction) {
+    async run(req: AuthenticatedRequest, res: Response, next: NextFunction) {
         try {
             const token = req.headers.authorization;
 
             if (!token)
                 throw new ErrorMissingRequiredFields("No token provided");
-            this.tokenService.validateToken(token.replace("Bearer ", ""));
 
-            next();
+            try {
+                const decoded = this.tokenService.validateToken(
+                    token.replace("Bearer ", "")
+                ) as {
+                    user_id: number;
+                    plan_id: number;
+                };
+
+                req.user = {
+                    user_id: decoded.user_id,
+                    plan_id: decoded.plan_id
+                };
+
+                next();
+            } catch (error) {
+                throw new ErrorValidateToken("Invalid or expired token");
+            }
         } catch (error) {
             switch (true) {
                 case error instanceof ErrorMissingRequiredFields:
@@ -31,7 +53,7 @@ export default class AuthMiddleware {
                     return handleErrorResponse({
                         res,
                         statusCode: 401,
-                        name: error.name
+                        name: error.message
                     });
 
                 default:

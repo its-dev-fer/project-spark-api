@@ -12,4 +12,12 @@ export default class UserService implements UserInterface {
             throw new ErrorAccessingDatabase("Failed to query user database");
         }
     }
+    async findUserById(id: number): Promise<IUser | undefined> {
+        try {
+            const user = await User.findByPk(id);
+            return user || undefined;
+        } catch (error) {
+            throw new ErrorAccessingDatabase("Failed to query user database");
+        }
+    }
 }

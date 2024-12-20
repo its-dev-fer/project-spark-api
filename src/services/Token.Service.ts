@@ -21,10 +21,13 @@ export default class TokenService implements TokenInterface {
         }
     }
 
-    validateToken(token: string): boolean {
+    validateToken(token: string): { user_id: number; plan_id: number } {
         try {
-            jwt.verify(token, JWT_SECRET, { algorithms: ["HS256"] });
-            return true;
+            const decodedToken = jwt.verify(token, "your-secret-key") as {
+                user_id: number;
+                plan_id: number;
+            };
+            return decodedToken;
         } catch (error) {
             throw new ErrorValidateToken("Invalid or expired token");
         }
