@@ -1,11 +1,10 @@
 import IUser from "../DTOS/users/IUser";
 import UserInterface from "../Interfaces/service/UserInterface";
 import User from "../db/Models/User";
-import { ErrorAccessingDatabase } from "../Errors/Response.Error";  
+import { ErrorAccessingDatabase } from "../Errors/Response.Error";
 
 export default class UserService implements UserInterface {
-
-      async findUserByEmail(email: string): Promise<IUser | undefined> {
+    async findUserByEmail(email: string): Promise<IUser | undefined> {
         try {
             const existingUser = await User.findOne({ where: { email } });
             return existingUser || undefined;
