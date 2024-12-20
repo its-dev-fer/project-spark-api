@@ -42,20 +42,21 @@ export default class AuthController {
             if (!isPasswordMatch)
                 throw new ErrorCredentials("Credentials Invalid");
 
-            const token = this.tokenService.generateToken(
+            // Usar el método que maneja las cookies
+            this.tokenService.generateTokenAndSetCookie(
                 userFound.id,
-                userFound.plan_id
-            );
-            const refreshToken = this.tokenService.refreshToken(
-                userFound.id,
-                userFound.plan_id
+                userFound.plan_id,
+                res
             );
 
             return res.status(200).json({
                 message: "Access Successfully",
                 data: {
-                    token,
-                    refreshToken
+                    user: {
+                        id: userFound.id,
+                        email: userFound.email,
+                        plan_id: userFound.plan_id
+                    }
                 }
             });
         } catch (error) {

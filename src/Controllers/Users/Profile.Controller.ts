@@ -3,7 +3,6 @@ import UserService from "../../Services/User.Service";
 import ProfileService from "../../Services/Profile.Service";
 import { ErrorNotFound } from "../../Errors/Response.Error";
 import handleErrorResponse from "../../Errors/HanlderResponse.Error";
-import { AuthenticatedRequest } from "../../Interfaces/auth/AuthenticatedRequest";
 
 export default class ProfileController {
     constructor(
@@ -11,17 +10,21 @@ export default class ProfileController {
         private readonly profileService: ProfileService
     ) {}
 
-    async getUserProfile(req: AuthenticatedRequest, res: Response) {
+    async getUserProfile(req: any, res: Response) {
         try {
             const userId = req.user?.user_id;
-
+            console.log(userId)
             if (!userId) {
                 throw new ErrorNotFound("User not found");
             }
 
-            const userProfile =
-                await this.profileService.getUserProfile(userId);
+            const userProfile = await this.userService.findUserById(userId);
 
+            if (!userProfile) {
+                throw new ErrorNotFound("User profile not found");
+            }
+
+            
             res.status(200).json(userProfile);
         } catch (error) {
             if (error instanceof ErrorNotFound) {

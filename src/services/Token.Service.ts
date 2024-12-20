@@ -1,3 +1,4 @@
+import { Response } from 'express-serve-static-core';
 import jwt from "jsonwebtoken";
 import TokenInterface from "../Interfaces/service/TokenInterface";
 import { JWT_SECRET, REFRESH_TOKEN } from "../Config/config";
@@ -21,13 +22,27 @@ export default class TokenService implements TokenInterface {
         }
     }
 
-    validateToken(token: string): { user_id: number; plan_id: number } {
+    generateTokenAndSetCookie(user_id: number, plan_id: number, res: Response<any, Record<string, any>, number>): void {
         try {
-            const decodedToken = jwt.verify(token, "your-secret-key") as {
-                user_id: number;
-                plan_id: number;
-            };
-            return decodedToken;
+            const token = this.generateToken(user_id, plan_id);
+            const refreshToken = this.refreshToken(user_id, plan_id);
+
+            res.cookie('token', token, {
+                maxAge: 3 * 60 * 60 * 1000 
+            });
+
+            res.cookie('refreshToken', refreshToken, {
+                maxAge: 30 * 24 * 60 * 60 * 1000 
+            });
+        } catch (error) {
+            throw new ErrorGenerateToken("Failed to generate and set token cookies");
+        }
+    }
+
+    validateToken(token: string): boolean {
+        try {
+            jwt.verify(token, JWT_SECRET, { algorithms: ["HS256"] });
+            return true;
         } catch (error) {
             throw new ErrorValidateToken("Invalid or expired token");
         }
@@ -62,6 +77,27 @@ export default class TokenService implements TokenInterface {
             };
         } catch (error) {
             throw new ErrorUnauthorized("Invalid or expired refresh token");
+        }
+    }
+
+    validateAndDecodeToken(token: string): IPayload {
+        try {
+            const decoded = jwt.verify(token, JWT_SECRET, {
+                algorithms: ["HS256"]
+            }) as IPayload;
+
+            if (!decoded?.user_id || !decoded?.plan_id) {
+                throw new ErrorPayloadDecoding(
+                    "The payload of the token is missing or malformed."
+                );
+            }
+
+            return {
+                user_id: decoded.user_id,
+                plan_id: decoded.plan_id
+            };
+        } catch (error) {
+            throw new ErrorValidateToken("Invalid or expired token");
         }
     }
 }

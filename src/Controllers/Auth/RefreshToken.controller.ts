@@ -13,25 +13,28 @@ export default class RefreshTokenController {
 
     async run(req: Request, res: Response): Promise<Response> {
         try {
-            const { refreshToken }: { refreshToken: string } = req.body;
+            const refreshToken = req.cookies?.refreshToken;
 
             if (!refreshToken)
                 throw new ErrorMissingRequiredFields(
-                    "Is required refreshToken"
+                    "Refresh token not found in cookies"
                 );
 
             const payload =
                 this.tokenInterface.validateRefreshToken(refreshToken);
 
-            const newToken = this.tokenInterface.generateToken(
+            // Usar el método que maneja las cookies
+            this.tokenInterface.generateTokenAndSetCookie(
                 payload.user_id,
-                payload.plan_id
+                payload.plan_id,
+                res
             );
 
             return res.status(200).json({
-                message: "Token generated successfully",
+                message: "Token refreshed successfully",
                 data: {
-                    token: newToken
+                    user_id: payload.user_id,
+                    plan_id: payload.plan_id
                 }
             });
         } catch (error) {
