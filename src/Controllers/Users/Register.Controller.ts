@@ -11,7 +11,6 @@ import {
 } from "../../Errors/Response.Error";
 import handleErrorResponse from "../../Errors/HanlderResponse.Error";
 import UserResponse from "../../DTOS/users/UserResponse";
-
 export default class RegisterUserController {
     constructor(
         readonly tokenService: TokenInterface,
@@ -23,7 +22,6 @@ export default class RegisterUserController {
         try {
             const { email, password, name }: UserRequest = req.body;
             const existingUser = await this.userService.findUserByEmail(email);
-       
             if (existingUser)
                 throw new ErrorResourceExists(
                     "The email address you entered is already registered."
@@ -40,9 +38,11 @@ export default class RegisterUserController {
                 );
             });
 
-            const token = this.tokenService.generateToken(
+            // Usar el método que maneja las cookies
+            this.tokenService.generateTokenAndSetCookie(
                 newUser.id,
-                newUser.plan_id
+                newUser.plan_id,
+                res
             );
 
             const user: UserResponse = {
@@ -55,13 +55,10 @@ export default class RegisterUserController {
             return res.status(201).json({
                 message: "Resource successfully created",
                 data: {
-                    user,
-                    token
+                    user
                 }
             });
-
         } catch (error) {
-            console.error(error)
             switch (true) {
                 case error instanceof ErrorAccessingDatabase:
                     return handleErrorResponse({

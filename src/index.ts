@@ -4,11 +4,11 @@ import cors from "cors";
 import express, { Request, Response } from "express";
 import { AuthRouter } from "./Routes/Auth.routes";
 import { UserRouter } from "./Routes/User.routes";
-
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const port = process.env.PORT || 3030;
-
+app.use(cookieParser());
 app.use(express.json());
 app.use("/auth", AuthRouter);
 app.use("/user", UserRouter);
@@ -29,8 +29,5 @@ const startServer = async () => {
         console.log(`Server is running on http://localhost:${port}`);
     });
 };
-
-
-
 
 startServer();
