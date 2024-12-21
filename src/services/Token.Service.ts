@@ -14,7 +14,7 @@ export default class TokenService implements TokenInterface {
         try {
             return jwt.sign({ user_id, plan_id }, JWT_SECRET, {
                 algorithm: "HS256",
-                expiresIn: "1h"
+                expiresIn: "3h"
             });
         } catch (error) {
             throw new ErrorGenerateToken("Failed to generate the token");

@@ -9,8 +9,12 @@ const router = Router();
 const tokenService = new TokenService();
 const encryptService = new EncryptService();
 const userService = new UserService();
-const userController = new RegisterUserController(tokenService, encryptService, userService);
+const userController = new RegisterUserController(
+    tokenService,
+    encryptService,
+    userService
+);
 
-router.post("/register", (req, res) => userController.run(req, res));
+router.post("/register", userController.run.bind(userController));
 
 export { router as UserRouter };
